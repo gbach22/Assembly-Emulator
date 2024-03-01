@@ -1,0 +1,70 @@
+main:
+addi sp, sp, -8
+###Argument###
+call reverseString
+li a11, -1
+mv ra, a11
+addi sp, sp, 8
+ret
+
+reverseString:
+addi sp, sp, -16
+sw ra, 12(sp)
+li a1, 0
+sw a1, 8(sp)
+
+lwlong a1, 16(sp)
+addi sp, sp, -8
+swlong a1, 0(sp)
+call strlen
+addi sp, sp, 8
+mv a1, rv
+addi a1, a1, -1
+sw a1, 4(sp)
+li a5, 1
+
+while:
+lw a1, 8(sp)
+lw a2, 4(sp)
+bge a1, a2 while_end
+lwlong a1, 16(sp)
+lw a2, 8(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lblong a3, 0(a1)
+sb a3, 0(sp)
+
+lwlong a1, 16(sp)
+lw a2, 4(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lblong a3, 0(a1)
+lwlong a1, 16(sp)
+lw a2, 8(sp)
+mul a2, a2, a5
+add a1, a1, a2
+sblong a3, 0(a1)
+
+lb a2, 0(sp)
+lwlong a1, 16(sp)
+lw a3, 4(sp)
+mul a3, a3, a5
+add a1, a1, a3
+sblong a2, 0(a1)
+
+lw a1, 4(sp)
+addi a1, a1, -1
+sw a1, 4(sp)
+
+lw a1, 8(sp)
+addi a1, a1, 1
+sw a1, 8(sp)
+
+jump while
+while_end:
+lw ra, 12(sp)
+lwlong a1, 16(sp)
+mv rv, a1
+addi sp, sp, 16
+ret
+

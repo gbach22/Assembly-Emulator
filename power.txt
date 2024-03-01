@@ -1,0 +1,39 @@
+main:
+addi sp, sp, -8
+###Argument###
+call power
+li a11, -1
+mv ra, a11
+addi sp, sp, 8
+ret
+
+power:
+addi sp, sp, -12
+sw ra, 8(sp)
+li a1, 1
+sw a1, 4(sp)
+
+li a1, 0
+sw a1, 0(sp)
+
+for:
+lw a1, 0(sp)
+lw a2, 16(sp)
+bge a1, a2 for_end
+
+lw a1, 4(sp)
+lw a2, 12(sp)
+mul a1, a1, a2
+sw a1, 4(sp)
+
+lw a1, 0(sp)
+addi a1, a1, 1
+sw a1, 0(sp)
+jump for
+
+for_end:
+lw a1, 4(sp)
+mv rv, a1
+lw a1, 12(sp)
+addi sp, sp, 12
+ret

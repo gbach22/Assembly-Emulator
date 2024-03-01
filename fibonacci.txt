@@ -1,0 +1,43 @@
+main:
+addi sp, sp, -4
+###Argument###
+call fibonacci
+li a1, -1
+mv ra, a1
+addi sp, sp, 4
+ret
+
+fibonacci:
+addi sp, sp, -8
+sw ra, 4(sp)
+lw a1, 8(sp)
+li a2, 1
+bgt a1, a2 else
+mv rv, a1
+lw ra, 4(sp)
+addi sp, sp, 8
+ret
+else:
+lw a1, 8(sp)
+li a3, 1
+sub a1, a1, a3
+addi sp, sp, -4
+sw a1, 0(sp)
+call fibonacci
+addi sp, sp, 4
+sw rv, 0(sp)
+li a3, 2
+lw a1, 8(sp)
+sub a1, a1, a3
+addi sp, sp, -4
+sw a1, 0(sp)
+call fibonacci
+addi sp, sp, 4
+lw a1, 0(sp)
+add rv, rv, a1
+lw ra, 4(sp)
+addi sp, sp, 8
+ret
+
+
+

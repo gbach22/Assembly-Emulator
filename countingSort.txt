@@ -1,0 +1,95 @@
+main:
+addi sp, sp, -24
+###Argument###
+call countingSort
+li a11, -1
+mv ra, a11
+addi sp, sp, 24
+ret
+
+countingSort:
+addi sp, sp, -16
+sw ra, 12(sp)
+
+li a1, 0
+sw a1, 8(sp)
+li a5, 4
+
+first_for:
+lw a1, 8(sp)
+lw a2, 16(sp)
+bge a1, a2 first_for_end
+
+lwlong a1, 20(sp)
+lw a2, 8(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lwlong a1, 0(a1)
+
+lwlong a3, 28(sp)
+mul a1, a1, a5
+add a3, a3, a1
+lwlong a4, 0(a3)
+addi a4, a4, 1
+swlong a4, 0(a3)
+
+lw a1, 8(sp)
+addi a1, a1, 1
+sw a1, 8(sp)
+jump first_for
+
+first_for_end:
+
+li a1, 0
+sw a1, 4(sp)
+sw a1, 0(sp)
+
+second_for:
+lw a1, 0(sp)
+lw a2, 36(sp)
+bgt a1, a2 second_for_end
+
+while:
+lwlong a1, 28(sp)
+lw a2, 0(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lwlong a1, 0(a1)
+li a2, 0
+ble a1, a2 while_end
+
+lwlong a1, 20(sp)
+lw a2, 4(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lw a3, 0(sp)
+swlong a3, 0(a1)
+
+lw a2, 4(sp)
+addi a2, a2, 1
+sw a2, 4(sp)
+
+lwlong a1, 28(sp)
+lw a2, 0(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lwlong a2, 0(a1)
+addi a2, a2, -1
+swlong a2, 0(a1)
+
+jump while
+
+while_end:
+lw a1, 0(sp)
+addi a1, a1, 1
+sw a1, 0(sp)
+jump second_for
+
+second_for_end:
+lw ra, 12(sp)
+lwlong a1, 20(sp)
+mv rv, a1
+addi sp, sp, 16
+ret
+
+

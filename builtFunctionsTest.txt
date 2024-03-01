@@ -1,0 +1,136 @@
+main:
+addi sp, sp, -28
+li a1, 4
+addi sp, sp, -4
+sw a1, 0(sp)
+call malloc 
+addi sp, sp, 4
+mv a1, rv
+swlong a1, 20(sp)
+
+lwlong a1, 20(sp)
+li a2, 0
+bne a1, a2 first_else
+addi sp, sp, -12
+###firstArgument###
+li a2, 1
+swlong a1, 4(sp)
+sw a2, 0(sp)
+call printf
+addi sp, sp, 12
+addi sp, sp, 28
+li a1, -10
+mv rv, a1
+ret
+
+first_else:
+addi sp, sp, -12
+###secondArgument###
+swlong a1, 4(sp)
+li a2, 1
+sw a2, 0(sp)
+call printf
+addi sp, sp, 12
+
+
+lwlong a1, 20(sp)
+li a2, 150
+swlong a2, 0(a1)
+lwlong a2, 0(a1)
+
+addi sp, sp, -16
+###thidstArgument###
+swlong a1, 4(sp)
+sw a2, 12(sp)
+li a3, 2
+sw a3, 0(sp)
+call printf
+addi sp, sp, 16
+
+li a1, 4
+li a2, 2
+mul a1, a1, a2
+lwlong a2, 20(sp)
+
+addi sp, sp, -12
+swlong a2, 0(sp)
+sw a1, 8(sp)
+call realloc
+addi sp, sp, 12
+mv a1, rv
+swlong a1, 12(sp)
+
+li a2, 0
+bne a1, a2 second_else
+addi sp, sp, -12
+###fourthArgument###
+li a2, 1
+swlong a1, 4(sp)
+sw a2, 0(sp)
+call printf
+addi sp, sp, 12
+addi sp, sp, 28
+li a1, -10
+mv rv, a1
+ret
+
+second_else:
+addi sp, sp, -12
+###fifthArgument###
+swlong a1, 4(sp)
+li a2, 1
+sw a2, 0(sp)
+call printf
+addi sp, sp, 12
+
+lwlong a1, 12(sp)
+addi a1, a1, 4
+li a2, 24
+swlong a2, 0(a1)
+
+addi sp, sp, -16
+###sixthArgument###
+swlong a1, 4(sp)
+sw a2, 12(sp)
+li a3, 2
+sw a3, 0(sp)
+call printf
+addi sp, sp, 16
+
+###seventhArgument###
+swlong a1, 4(sp)
+lwlong a1, 4(sp)
+addi sp, sp, -8
+swlong a1, 0(sp)
+call strlen
+addi sp, sp, 8
+mv a1, rv
+sw a1, 0(sp)
+
+lwlong a2, 4(sp)
+lw a3, 0(sp)
+addi sp, sp, -32
+swlong a2, 4(sp)
+###eighthArgument###
+swlong a1, 12(sp)
+sw a3, 20(sp)
+###ninthArgument###
+swlong a1, 24(sp)
+li a1, 4
+sw a1, 0(sp)
+call printf
+addi sp, sp, 32
+
+lwlong a1, 12(sp)
+addi sp, sp, -8
+swlong a1, 0(sp)
+call free
+addi sp, sp, 8
+
+addi sp, sp, 28
+li a1, -1
+mv ra, a1
+ret
+
+
+

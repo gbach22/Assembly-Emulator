@@ -1,0 +1,33 @@
+main:
+addi sp, sp, -4
+###Argument###
+call factorial 
+li a1, -1
+mv ra, a1
+addi sp, sp, 44
+ret
+
+factorial:
+addi sp, sp, -4
+sw ra, 0(sp)
+lw a1, 4(sp)
+li a2, 1
+bgt a1, a2 else
+li a1, 1
+mv rv, a1
+lw ra, 0(sp)
+addi sp, sp, 4
+ret
+else:
+lw a1, 4(sp)
+li a3, 1
+sub a1, a1, a3
+addi sp, sp, -4
+sw a1, 0(sp)
+call factorial
+addi sp, sp, 4
+lw a1, 4(sp)
+mul rv, rv, a1
+lw ra, 0(sp)
+addi sp, sp, 4
+ret

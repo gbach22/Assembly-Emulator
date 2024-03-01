@@ -1,0 +1,41 @@
+main:
+addi sp, sp, -8
+###Argument###
+call gcd
+li a11, -1
+mv ra, a11
+addi sp, sp, 8
+ret
+
+gcd:
+addi sp, sp, -8
+sw ra, 4(sp)
+
+li a5, 0
+
+while:
+lw a1, 12(sp)
+beq a1, a5 while_end
+
+lw a1, 12(sp)
+sw a1, 0(sp)
+
+lw a1, 8(sp)
+lw a2, 12(sp)
+div a3, a1, a2
+mul a3, a3, a2
+sub a1, a1, a3
+sw a1, 12(sp)
+
+lw a1, 0(sp)
+sw a1, 8(sp)
+
+jump while
+
+while_end:
+lw a1, 8(sp)
+mv rv, a1
+lw ra, 4(sp)
+addi sp, sp, 8
+ret
+

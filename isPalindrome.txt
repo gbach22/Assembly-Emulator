@@ -1,0 +1,63 @@
+main:
+addi sp, sp, -8
+###Argument###
+call isPalindrome
+li a11, -1
+mv ra, a11
+addi sp, sp, 8
+ret
+
+isPalindrome:
+addi sp, sp, -12
+sw ra, 8(sp)
+
+lwlong a1, 12(sp)
+addi sp, sp, -8
+swlong a1, 0(sp)
+call strlen
+addi sp, sp, 8
+mv a1, rv
+sw a1, 4(sp)
+
+li a1, 0
+sw a1, 0(sp)
+
+for:
+lw a1, 0(sp)
+lw a2, 4(sp)
+li a3, 2
+div a2, a2, a3
+bge a1, a2 for_end
+
+lwlong a1, 12(sp)
+lw a2, 0(sp)
+add a1, a1, a2
+lblong a1, 0(a1)
+
+lwlong a2, 12(sp)
+lw a3, 4(sp)
+add a2, a2, a3
+lw a4, 0(sp)
+sub a2, a2, a4
+addi a2, a2, -1
+lblong a2, 0(a2)
+
+beq a1, a2 else
+li a1, -1
+mv rv, a1
+lw ra, 8(sp)
+addi sp, sp, 12
+ret
+
+else:
+lw a1, 0(sp)
+addi a1, a1, 1
+sw a1, 0(sp)
+jump for
+
+for_end:
+li a1, 1
+mv rv, a1
+lw ra, 8(sp)
+addi sp, sp, 8
+ret

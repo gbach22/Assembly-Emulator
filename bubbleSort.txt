@@ -1,0 +1,78 @@
+main:
+addi sp, sp, -12
+###Argument###
+call bubbleSort
+li a11, -1
+mv ra, a11
+addi sp, sp, 12
+ret
+
+bubbleSort:
+addi sp, sp, -16
+sw ra, 12(sp)
+
+li a1, 0
+sw a1, 8(sp)
+li a5, 4
+
+first_for:
+lw a1, 8(sp)
+lw a2, 16(sp)
+addi a2, a2, -1
+bge a1, a2 first_for_end
+
+li a1, 0
+sw a1, 4(sp)
+
+second_for:
+lw a1, 4(sp)
+lw a2, 16(sp)
+addi a2, a2, -1
+lw a3, 8(sp)
+sub a2, a2, a3
+bge a1, a2 second_for_end
+
+lwlong a1, 20(sp)
+lw a2, 4(sp)
+mul a2, a2, a5
+add a1, a1, a2
+lwlong a2, 0(a1)
+
+addi a1, a1, 4
+lwlong a3, 0(a1)
+
+ble a2, a3 else
+
+sw a2, 0(sp)
+lwlong a1, 20(sp)
+lw a2, 4(sp)
+mul a2, a2, a5
+add a1, a1, a2
+addi a1, a1, 4
+lwlong a2, 0(a1)
+
+addi a1, a1, -4
+swlong a2, 0(a1)
+
+addi a1, a1, 4
+lw a2, 0(sp)
+swlong a2, 0(a1)
+
+else:
+lw a1, 4(sp)
+addi a1, a1, 1
+sw a1, 4(sp)
+jump second_for
+
+second_for_end:
+lw a1, 8(sp)
+addi a1, a1, 1
+sw a1, 8(sp)
+jump first_for
+
+first_for_end:
+lw ra, 12(sp)
+lwlong a1, 20(sp)
+mv rv, a1
+addi sp, sp, 16
+ret
